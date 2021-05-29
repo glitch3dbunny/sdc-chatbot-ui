@@ -1,0 +1,74 @@
+<router-outlet></router-outlet>
+<app-welcome-animation *ngIf="showingWelcome" (click)="accessApp()"></app-welcome-animation>
+<app-video-player *ngIf="showingVideo" (closeEvent)="stopVideo()"></app-video-player>
+
+<div class="app-wrapper">
+    <div class="stars" [ngStyle]="{'box-shadow': small}"></div>
+    <div class="stars2" [ngStyle]="{'box-shadow': medium}"></div>
+    <div class="stars3" [ngStyle]="{'box-shadow':big}"></div>
+
+    <!-- Header -->
+    <div class="top-indicators">
+        <div class="logo-container"><img class="logo" src="../assets/img/logos/logo-sonidos-del-cielo.svg"></div>
+        <!-- Speech detected -->
+        <p class="speech-detected">{{ lastRecognition }}</p>
+        <!-- Counter -->
+        <div class="counter-wrapper">
+            <img class="meteor-icon" src="../assets/img/animations/meteor.png">
+            <p class="classification-count">{{ classificationCount }}</p>
+        </div>
+        <!-- Micro status -->
+        <div [ngClass]="{'micro-on': voiceRecognitionService.isStoppedSpeechRecog === false, 'micro-off': voiceRecognitionService.isStoppedSpeechRecog === true}" class="micro-status" title="Estado del micrófono">
+            <fa-icon [icon]="faMicro" style="font-size: 20px !important;"></fa-icon>
+        </div>
+        <!-- Repeat last -->
+        <div class="repeat-last" title="Repetir sonido" style="padding: 10px 15px 14px 9px !important;" (click)="playLastMeteorSound()">
+            <fa-icon [icon]="faRepeat" style="font-size: 20px !important;"></fa-icon>
+        </div>
+        <!-- Tutorial quick access -->
+        <div class="tutorial-btn" title="Ver tutorial" (click)="playVideo()">
+            <fa-icon [icon]="faQuestion" style="font-size: 20px !important;"></fa-icon>
+        </div>
+    </div>
+    <div id="meteor">
+        <img class="meteor-animation" src="../assets/img/animations/meteor.png">
+    </div>
+
+    <!-- Meteor images -->
+    <div class="meteor-graph"></div>
+    
+    <!-- Companion-->
+    <div>
+        <img class="companion-animation" src="../assets/img/animations/ufo.png">
+    </div>
+
+    <!-- Other nimations -->
+    <div *ngIf="classificationCount==1 || classificationCount>1">
+        <img class="fisherman-animation" src="../assets/img/planets/moon.png">
+    </div>
+    <div *ngIf="classificationCount==5 || classificationCount>5">
+        <img class="banderilla-animation" src="../assets/img/planets/marte.png">
+    </div>
+    <div *ngIf="classificationCount==10 || classificationCount>10">
+        <img class="mars-animation" src="../assets/img/planets/jupiter.png">
+    </div>
+    <div *ngIf="classificationCount==15 || classificationCount>15">
+        <img class="satellite-animation" src="../assets/img/planets/neptune.png">
+    </div>
+    <div *ngIf="classificationCount==20 || classificationCount>20">
+        <img class="goldenStar-animation" src="../assets/img/planets/star.png">
+    </div>
+
+    <!-- Earth -->
+    <div id="earth">
+        <img class="earth-animation" src="../assets/img/animations/earth.png">
+    </div>
+
+    <!-- Conversation turn indicator -->
+    <div id="turn-indicator">
+        <div class="turn-indicator-container">
+            <fa-icon *ngIf="voiceRecognitionService.isStoppedSpeechRecog === false" [icon]="faTalk" class="turn-indicator-animation"></fa-icon>
+            <fa-icon *ngIf="voiceRecognitionService.isStoppedSpeechRecog === true" [icon]="faListen" class="turn-indicator-animation"></fa-icon>
+        </div>
+    </div>
+</div>
